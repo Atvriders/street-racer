@@ -11,9 +11,16 @@ function makeDefaultCosmetics(): Record<CosmeticSlot, number> {
   return { paint: 0, wheels: 0, bodykit: 0, spoiler: 0, underglow: 0, tint: 0 }
 }
 
+function generateId(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID()
+  }
+  return Math.random().toString(36).slice(2) + Date.now().toString(36)
+}
+
 function createOwnedCar(carId: CarId): OwnedCar {
   return {
-    uid: crypto.randomUUID(),
+    uid: generateId(),
     carId,
     parts: makeDefaultParts(),
     cosmetics: makeDefaultCosmetics(),
