@@ -381,6 +381,25 @@ export function Race() {
     }))
   }, [])
 
+  // Keyboard controls during racing
+  useEffect(() => {
+    if (state.phase !== 'racing') return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault()
+        clickAccumRef.current++
+      } else if (e.key === 's' || e.key === 'S') {
+        handleShift()
+      } else if (e.key === 'n' || e.key === 'N') {
+        handleNos()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [state.phase, handleShift, handleNos])
+
   const backToSelect = useCallback(() => {
     setWager(0)
     setState(s => ({ ...s, phase: 'select', raceTier: null, result: null }))
@@ -479,6 +498,7 @@ export function Race() {
 
   return (
     <div className="race-strip" onClick={handleThrottleClick}>
+      <div className="race-controls-hint">SPACE = Throttle&nbsp;&nbsp;|&nbsp;&nbsp;S = Shift&nbsp;&nbsp;|&nbsp;&nbsp;N = NOS</div>
       <div className="parallax-sky" style={{ backgroundPositionX: `${-state.playerPos * 200}px`, ...theme.sky }} />
       <div className="parallax-city" style={{ backgroundPositionX: `${-state.playerPos * 600}px`, ...theme.city }} />
       <div className="parallax-road" style={theme.road}>
