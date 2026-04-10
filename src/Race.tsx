@@ -1,9 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useGameStore, getEffectiveStats } from './store'
-import { RACE_TIERS, getUnlockedTier, tierRank } from './data'
+import { RACE_TIERS, CARS, getUnlockedTier, tierRank } from './data'
 import { CarSilhouette } from './CarSilhouette'
 import { Tachometer } from './Tachometer'
-import type { RaceTier } from './types'
+import type { RaceTier, CarId, OwnedCar, PartSlot, CosmeticSlot } from './types'
 import './Race.css'
 
 type RacePhase = 'select' | 'countdown' | 'racing' | 'finished'
@@ -26,6 +26,7 @@ interface RaceState {
   result: 'win' | 'lose' | null
   cashEarned: number
   repEarned: number
+  opponentCarId: CarId | null
 }
 
 const MAX_RPM = 9000
@@ -61,6 +62,7 @@ export function Race() {
     result: null,
     cashEarned: 0,
     repEarned: 0,
+    opponentCarId: null,
   })
 
   const rafRef = useRef<number>(0)
@@ -84,6 +86,11 @@ export function Race() {
     clickAccumRef.current = 0
     bogDownUntilRef.current = 0
 
+    // Pick a random opponent car from the matching tier
+    const tierCars = CARS.filter(c => c.tier === tierDef.requiredTier)
+    const opponentDef = tierCars[Math.floor(Math.random() * tierCars.length)]
+    const opponentCarId: CarId = (opponentDef ?? CARS[0]!).id
+
     setState({
       phase: 'countdown',
       raceTier,
@@ -102,8 +109,36 @@ export function Race() {
       result: null,
       cashEarned: 0,
       repEarned: 0,
+      opponentCarId,
     })
   }, [selectedCar])
+
+  // Build a fake OwnedCar for the opponent so CarSilhouette can render it
+  const buildOpponentCar = useCallback((carId: CarId, raceTier: RaceTier): OwnedCar => {
+    // Upgrade range per race tier
+    const ranges: Record<RaceTier, [number, number]> = {
+      street:   [0, 1],
+      highway:  [1, 2],
+      circuit:  [2, 3],
+      midnight: [3, 4],
+    }
+    const [lo, hi] = ranges[raceTier]
+    const randLevel = () => lo + Math.floor(Math.random() * (hi - lo + 1))
+
+    const partSlots: PartSlot[] = [
+      'engine', 'turbo', 'exhaust', 'suspension', 'tires', 'nos', 'weight', 'transmission',
+      'intercooler', 'ecu', 'clutch', 'rollcage', 'brakes', 'intake', 'headers', 'flywheel', 'fuel', 'diff',
+    ]
+    const cosmeticSlots: CosmeticSlot[] = [
+      'paint', 'wheels', 'bodykit', 'spoiler', 'underglow', 'tint',
+      'hood', 'exhaust_tip', 'decals', 'mirrors', 'seats', 'roll_bar',
+    ]
+
+    const parts = Object.fromEntries(partSlots.map(s => [s, randLevel()])) as Record<PartSlot, number>
+    const cosmetics = Object.fromEntries(cosmeticSlots.map(s => [s, randLevel()])) as Record<CosmeticSlot, number>
+
+    return { uid: 'opponent', carId, parts, cosmetics }
+  }, [])
 
   // Countdown timer
   useEffect(() => {
@@ -318,10 +353,18 @@ export function Race() {
     )
   }
 
+  const opponentDef = state.opponentCarId ? CARS.find(c => c.id === state.opponentCarId) : null
+  const opponentCar = state.opponentCarId && state.raceTier
+    ? buildOpponentCar(state.opponentCarId, state.raceTier)
+    : null
+
   if (state.phase === 'countdown') {
     return (
       <div className="race-countdown">
         <div className="countdown-number">{state.countdown > 0 ? state.countdown : 'GO!'}</div>
+        {opponentDef && (
+          <div className="opponent-name">VS: {opponentDef.name}</div>
+        )}
       </div>
     )
   }
@@ -332,6 +375,9 @@ export function Race() {
         <div className={`result-banner ${state.result}`}>
           {state.result === 'win' ? 'YOU WIN!' : 'YOU LOSE'}
         </div>
+        {opponentDef && (
+          <div className="opponent-name">vs {opponentDef.name}</div>
+        )}
         {state.result === 'win' && (
           <div className="result-rewards">
             <span className="reward-cash">+${state.cashEarned.toLocaleString()}</span>
@@ -356,7 +402,10 @@ export function Race() {
       <div className="parallax-road">
         <div className="road-lines" style={{ backgroundPositionX: `${-state.playerPos * 2000}px` }} />
         <div className="race-car opponent" style={{ left: `${state.opponentPos * 70 + 5}%` }}>
-          <div className="opponent-silhouette" />
+          {opponentCar
+            ? <CarSilhouette car={opponentCar} width={100} />
+            : <div style={{ width: 100, height: 40, background: '#333', borderRadius: '8px 20px 4px 4px', opacity: 0.6 }} />
+          }
         </div>
         <div className="race-car player" style={{ left: `${state.playerPos * 70 + 5}%` }}>
           <CarSilhouette car={selectedCar} width={120} glowing />
