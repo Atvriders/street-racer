@@ -28,6 +28,14 @@ Open [http://localhost:5173](http://localhost:5173).
 
 ## Docker
 
+**Docker Compose (recommended):**
+
+```bash
+docker compose up -d
+```
+
+**Or run directly:**
+
 ```bash
 docker pull ghcr.io/atvriders/street-racer:latest
 docker run -p 8080:80 ghcr.io/atvriders/street-racer:latest
