@@ -161,10 +161,33 @@ export const COSMETICS: CosmeticDefinition[] = [
 ]
 
 export const RACE_TIERS: RaceTierDefinition[] = [
-  { id: 'street', name: 'Street Race', requiredTier: 'D', baseCashReward: 500, baseRepReward: 10, opponentSpeed: 0.06, variance: 0.008 },
-  { id: 'highway', name: 'Highway Run', requiredTier: 'C', baseCashReward: 2_000, baseRepReward: 30, opponentSpeed: 0.08, variance: 0.006 },
-  { id: 'circuit', name: 'Circuit Battle', requiredTier: 'B', baseCashReward: 8_000, baseRepReward: 80, opponentSpeed: 0.10, variance: 0.005 },
-  { id: 'midnight', name: 'Midnight Touge', requiredTier: 'A', baseCashReward: 25_000, baseRepReward: 200, opponentSpeed: 0.13, variance: 0.004 },
+  // ── Tier D ───────────────────────────────────────────────────────────────────
+  { id: 'street',     name: 'Street Race',       requiredTier: 'D', baseCashReward: 500,     baseRepReward: 10,   opponentSpeed: 0.060, variance: 0.008 },
+  { id: 'industrial', name: 'Industrial Zone',   requiredTier: 'D', baseCashReward: 750,     baseRepReward: 15,   opponentSpeed: 0.065, variance: 0.007 },
+
+  // ── Tier C ───────────────────────────────────────────────────────────────────
+  { id: 'highway',    name: 'Highway Run',       requiredTier: 'C', baseCashReward: 2_000,   baseRepReward: 30,   opponentSpeed: 0.080, variance: 0.006 },
+  { id: 'downtown',   name: 'Downtown Sprint',   requiredTier: 'C', baseCashReward: 2_500,   baseRepReward: 35,   opponentSpeed: 0.082, variance: 0.006 },
+  { id: 'docks',      name: 'Dockyard Dash',     requiredTier: 'C', baseCashReward: 3_000,   baseRepReward: 40,   opponentSpeed: 0.085, variance: 0.005 },
+
+  // ── Tier B ───────────────────────────────────────────────────────────────────
+  { id: 'circuit',    name: 'Circuit Battle',    requiredTier: 'B', baseCashReward: 8_000,   baseRepReward: 80,   opponentSpeed: 0.100, variance: 0.005 },
+  { id: 'tunnel',     name: 'Tunnel Run',        requiredTier: 'B', baseCashReward: 10_000,  baseRepReward: 90,   opponentSpeed: 0.105, variance: 0.005 },
+  { id: 'bridge',     name: 'Bay Bridge Blitz',  requiredTier: 'B', baseCashReward: 12_000,  baseRepReward: 100,  opponentSpeed: 0.110, variance: 0.004 },
+
+  // ── Tier A ───────────────────────────────────────────────────────────────────
+  { id: 'midnight',   name: 'Midnight Touge',    requiredTier: 'A', baseCashReward: 25_000,  baseRepReward: 200,  opponentSpeed: 0.130, variance: 0.004 },
+  { id: 'mountain',   name: 'Mountain Pass',     requiredTier: 'A', baseCashReward: 30_000,  baseRepReward: 220,  opponentSpeed: 0.135, variance: 0.004 },
+  { id: 'airport',    name: 'Airport Runway',    requiredTier: 'A', baseCashReward: 35_000,  baseRepReward: 250,  opponentSpeed: 0.140, variance: 0.003 },
+  { id: 'canyon',     name: 'Canyon Expressway', requiredTier: 'A', baseCashReward: 40_000,  baseRepReward: 280,  opponentSpeed: 0.145, variance: 0.003 },
+
+  // ── Tier S ───────────────────────────────────────────────────────────────────
+  { id: 'neon_strip', name: 'Neon Strip',        requiredTier: 'S', baseCashReward: 80_000,  baseRepReward: 500,  opponentSpeed: 0.160, variance: 0.003 },
+  { id: 'coastal',    name: 'Coastal Highway',   requiredTier: 'S', baseCashReward: 100_000, baseRepReward: 600,  opponentSpeed: 0.170, variance: 0.002 },
+
+  // ── Tier SS ──────────────────────────────────────────────────────────────────
+  { id: 'underground', name: 'Underground Circuit', requiredTier: 'SS', baseCashReward: 200_000, baseRepReward: 1_000, opponentSpeed: 0.190, variance: 0.002 },
+  { id: 'rooftop',    name: 'Rooftop Showdown',  requiredTier: 'SS', baseCashReward: 500_000, baseRepReward: 2_000, opponentSpeed: 0.220, variance: 0.001 },
 ]
 
 export const CREW: CrewMember[] = [

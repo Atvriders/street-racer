@@ -43,7 +43,7 @@ export type CosmeticSlot =
   | 'paint' | 'wheels' | 'bodykit' | 'spoiler' | 'underglow' | 'tint'
   | 'hood' | 'exhaust_tip' | 'decals' | 'mirrors' | 'seats' | 'roll_bar'
 
-export type RaceTier = 'street' | 'highway' | 'circuit' | 'midnight'
+export type RaceTier = 'street' | 'highway' | 'circuit' | 'midnight' | 'industrial' | 'downtown' | 'mountain' | 'tunnel' | 'bridge' | 'docks' | 'airport' | 'canyon' | 'neon_strip' | 'underground' | 'rooftop' | 'coastal'
 
 export type View = 'garage' | 'race' | 'shop' | 'leaderboard'
 

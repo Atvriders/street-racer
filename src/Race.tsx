@@ -30,6 +30,74 @@ interface RaceState {
 }
 
 const MAX_RPM = 9000
+
+interface ParallaxTheme {
+  sky: React.CSSProperties
+  city: React.CSSProperties
+  road: React.CSSProperties
+}
+
+function getParallaxTheme(raceTier: RaceTier | null): ParallaxTheme {
+  switch (raceTier) {
+    // Blue-tinted city
+    case 'downtown':
+    case 'docks':
+      return {
+        sky:  { background: 'linear-gradient(180deg, #020818 0%, #0a1a3a 60%, #0d2040 100%)' },
+        city: { background: 'repeating-linear-gradient(90deg, transparent 0px, transparent 40px, #0a1530 40px, #0a1530 42px, transparent 42px, transparent 80px, #071225 80px, #071225 120px, transparent 120px, transparent 130px)', opacity: 0.7 },
+        road: { background: 'linear-gradient(180deg, #111a22 0%, #0a1218 100%)' },
+      }
+    // Dark with more lights
+    case 'highway':
+    case 'tunnel':
+    case 'bridge':
+      return {
+        sky:  { background: 'linear-gradient(180deg, #020208 0%, #08081a 60%, #101028 100%)' },
+        city: { background: 'repeating-linear-gradient(90deg, transparent 0px, transparent 30px, #141422 30px, #141422 32px, transparent 32px, transparent 60px, #0f0f1e 60px, #0f0f1e 90px, transparent 90px, transparent 100px)', opacity: 0.8 },
+        road: { background: 'linear-gradient(180deg, #151515 0%, #0c0c0c 100%)' },
+      }
+    // Dark green/blue mountain tints
+    case 'mountain':
+    case 'canyon':
+    case 'coastal':
+      return {
+        sky:  { background: 'linear-gradient(180deg, #020d08 0%, #061a10 60%, #0a2218 100%)' },
+        city: { background: 'repeating-linear-gradient(90deg, transparent 0px, transparent 50px, #081a10 50px, #081a10 52px, transparent 52px, transparent 100px, #061410 100px, #061410 150px, transparent 150px, transparent 160px)', opacity: 0.6 },
+        road: { background: 'linear-gradient(180deg, #121a14 0%, #0a100c 100%)' },
+      }
+    // Industrial grey
+    case 'circuit':
+    case 'airport':
+      return {
+        sky:  { background: 'linear-gradient(180deg, #080808 0%, #141414 60%, #1c1c1c 100%)' },
+        city: { background: 'repeating-linear-gradient(90deg, transparent 0px, transparent 45px, #1a1a1a 45px, #1a1a1a 47px, transparent 47px, transparent 90px, #151515 90px, #151515 135px, transparent 135px, transparent 145px)', opacity: 0.65 },
+        road: { background: 'linear-gradient(180deg, #1e1e1e 0%, #141414 100%)' },
+      }
+    // Extra neon — pink/purple sky
+    case 'midnight':
+    case 'neon_strip':
+      return {
+        sky:  { background: 'linear-gradient(180deg, #0d0118 0%, #1a0530 60%, #2a0845 100%)' },
+        city: { background: 'repeating-linear-gradient(90deg, transparent 0px, transparent 40px, #1a0530 40px, #1a0530 42px, transparent 42px, transparent 80px, #130320 80px, #130320 120px, transparent 120px, transparent 130px)', opacity: 0.75 },
+        road: { background: 'linear-gradient(180deg, #1a0a20 0%, #0f0515 100%)' },
+      }
+    // Deep purple/black underground
+    case 'underground':
+    case 'rooftop':
+      return {
+        sky:  { background: 'linear-gradient(180deg, #000000 0%, #0a0010 60%, #10001a 100%)' },
+        city: { background: 'repeating-linear-gradient(90deg, transparent 0px, transparent 35px, #0f0018 35px, #0f0018 37px, transparent 37px, transparent 70px, #0a0012 70px, #0a0012 105px, transparent 105px, transparent 115px)', opacity: 0.85 },
+        road: { background: 'linear-gradient(180deg, #0a0010 0%, #050008 100%)' },
+      }
+    // Default: dark city (street/industrial)
+    default:
+      return {
+        sky:  { background: 'linear-gradient(180deg, #050510 0%, #0f0f2a 60%, #1a1035 100%)' },
+        city: {},
+        road: { background: 'linear-gradient(180deg, #1a1a1a 0%, #111 100%)' },
+      }
+  }
+}
 const SHIFT_ZONE_START = 0.65
 const SHIFT_ZONE_END = 0.82
 const GEARS = 6
@@ -117,10 +185,22 @@ export function Race() {
   const buildOpponentCar = useCallback((carId: CarId, raceTier: RaceTier): OwnedCar => {
     // Upgrade range per race tier
     const ranges: Record<RaceTier, [number, number]> = {
-      street:   [0, 1],
-      highway:  [1, 2],
-      circuit:  [2, 3],
-      midnight: [3, 4],
+      street:      [0, 1],
+      industrial:  [0, 1],
+      highway:     [1, 2],
+      downtown:    [1, 2],
+      docks:       [1, 2],
+      circuit:     [2, 3],
+      tunnel:      [2, 3],
+      bridge:      [2, 3],
+      midnight:    [3, 4],
+      mountain:    [3, 4],
+      airport:     [3, 4],
+      canyon:      [3, 4],
+      neon_strip:  [4, 5],
+      coastal:     [4, 5],
+      underground: [5, 5],
+      rooftop:     [5, 5],
     }
     const [lo, hi] = ranges[raceTier]
     const randLevel = () => lo + Math.floor(Math.random() * (hi - lo + 1))
@@ -395,11 +475,13 @@ export function Race() {
     )
   }
 
+  const theme = getParallaxTheme(state.raceTier)
+
   return (
     <div className="race-strip" onClick={handleThrottleClick}>
-      <div className="parallax-sky" style={{ backgroundPositionX: `${-state.playerPos * 200}px` }} />
-      <div className="parallax-city" style={{ backgroundPositionX: `${-state.playerPos * 600}px` }} />
-      <div className="parallax-road">
+      <div className="parallax-sky" style={{ backgroundPositionX: `${-state.playerPos * 200}px`, ...theme.sky }} />
+      <div className="parallax-city" style={{ backgroundPositionX: `${-state.playerPos * 600}px`, ...theme.city }} />
+      <div className="parallax-road" style={theme.road}>
         <div className="road-lines" style={{ backgroundPositionX: `${-state.playerPos * 2000}px` }} />
         <div className="race-car opponent" style={{ left: `${state.opponentPos * 70 + 5}%` }}>
           {opponentCar
