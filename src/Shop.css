@@ -1,0 +1,288 @@
+/* Shop */
+.shop {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 60px;
+}
+
+.shop-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shop-heading {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--cyan);
+  letter-spacing: 3px;
+  border-bottom: 1px solid var(--cyan-dim);
+  padding-bottom: 8px;
+}
+
+.shop-desc {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.upgrade-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upgrade-subhead {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.upgrade-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  transition: border-color 0.2s;
+}
+
+.upgrade-card:hover {
+  border-color: var(--cyan-dim);
+}
+
+.upgrade-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.upgrade-name {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.upgrade-pips {
+  display: flex;
+  gap: 4px;
+}
+
+.pip {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--bg-primary);
+  border: 1px solid var(--text-dim);
+  transition: all 0.2s;
+}
+
+.pip.filled {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan-dim);
+}
+
+.upgrade-btn {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: var(--radius);
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.upgrade-btn:hover:not(:disabled) {
+  background: var(--cyan);
+  color: var(--bg-primary);
+}
+
+.upgrade-btn.maxed {
+  background: transparent;
+  border-color: var(--text-dim);
+  color: var(--text-dim);
+}
+
+.upgrade-btn.cant-afford {
+  opacity: 0.4;
+}
+
+.car-shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.car-shop-card {
+  background: var(--bg-card);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.car-shop-card:hover:not(.owned) {
+  border-color: var(--cyan-dim);
+}
+
+.car-shop-card.owned {
+  opacity: 0.5;
+}
+
+.car-shop-tier {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: var(--pink);
+  letter-spacing: 2px;
+}
+
+.car-shop-name {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.car-shop-year {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.car-shop-owned {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--green);
+  letter-spacing: 2px;
+}
+
+.buy-car-btn {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  margin-top: 4px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: var(--radius);
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.buy-car-btn:hover:not(:disabled) {
+  background: var(--cyan);
+  color: var(--bg-primary);
+}
+
+.buy-car-btn.cant-afford {
+  opacity: 0.4;
+}
+
+.buy-slot-btn {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: 10px 24px;
+  background: var(--bg-card);
+  color: var(--yellow);
+  border: 1px solid var(--yellow);
+  border-radius: var(--radius);
+  letter-spacing: 2px;
+  align-self: flex-start;
+  transition: all 0.2s;
+}
+
+.buy-slot-btn:hover:not(:disabled) {
+  background: var(--yellow);
+  color: var(--bg-primary);
+}
+
+.buy-slot-btn.cant-afford {
+  opacity: 0.4;
+}
+
+.crew-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.crew-card {
+  background: var(--bg-card);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.crew-card:hover:not(.owned) {
+  border-color: var(--green);
+}
+
+.crew-card.owned {
+  border-color: var(--green);
+  opacity: 0.6;
+}
+
+.crew-name {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.crew-income {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--green);
+}
+
+.crew-hired {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--green);
+  letter-spacing: 2px;
+}
+
+.hire-btn {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  margin-top: 4px;
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  border-radius: var(--radius);
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.hire-btn:hover:not(:disabled) {
+  background: var(--green);
+  color: var(--bg-primary);
+}
+
+.hire-btn.cant-afford {
+  opacity: 0.4;
+}
