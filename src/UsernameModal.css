@@ -1,0 +1,115 @@
+.username-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.username-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 56px 48px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--cyan);
+  border-radius: 12px;
+  box-shadow: var(--cyan-glow), 0 0 80px #00f0ff18;
+  animation: slide-up 0.35s ease;
+  max-width: 480px;
+  width: 90%;
+}
+
+.username-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--cyan);
+  text-shadow: var(--cyan-glow);
+  letter-spacing: 6px;
+  animation: neon-flicker 4s infinite;
+}
+
+.username-subtitle {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  letter-spacing: 4px;
+  margin-top: -12px;
+}
+
+.username-input {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--bg-primary);
+  color: var(--cyan);
+  border: 1px solid var(--cyan-dim);
+  border-radius: var(--radius);
+  outline: none;
+  text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.username-input::placeholder {
+  color: var(--text-dim);
+  letter-spacing: 3px;
+}
+
+.username-input:focus {
+  border-color: var(--cyan);
+  box-shadow: var(--cyan-glow);
+}
+
+.username-error {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--red);
+  letter-spacing: 2px;
+  margin-top: -12px;
+}
+
+.username-start-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 4px;
+  padding: 14px 40px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+  border-radius: var(--radius);
+  box-shadow: var(--cyan-glow);
+  transition: all 0.2s;
+  cursor: pointer;
+  width: 100%;
+}
+
+.username-start-btn:hover:not(:disabled) {
+  background: var(--cyan);
+  color: var(--bg-primary);
+  box-shadow: var(--cyan-glow), 0 0 40px #00f0ff55;
+}
+
+.username-start-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (max-width: 480px) {
+  .username-modal {
+    padding: 36px 24px;
+    gap: 18px;
+  }
+
+  .username-title {
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+  }
+}

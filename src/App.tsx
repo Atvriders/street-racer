@@ -4,6 +4,8 @@ import { getUnlockedTier } from './data'
 import { Garage } from './Garage'
 import { Race } from './Race'
 import { Shop } from './Shop'
+import { Leaderboard } from './Leaderboard'
+import { UsernameModal } from './UsernameModal'
 
 function formatCash(n: number): string {
   if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`
@@ -12,7 +14,7 @@ function formatCash(n: number): string {
 }
 
 export function App() {
-  const { view, setView, cash, rep, tickIdleIncome, crewMembers } = useGameStore()
+  const { view, setView, cash, rep, tickIdleIncome, crewMembers, username } = useGameStore()
   const lastTickRef = useRef(Date.now())
 
   // Idle income loop
@@ -30,6 +32,10 @@ export function App() {
 
   const tier = getUnlockedTier(rep)
 
+  if (!username) {
+    return <UsernameModal />
+  }
+
   return (
     <div className="app">
       {/* HUD Bar */}
@@ -44,6 +50,7 @@ export function App() {
           <button className={`nav-btn ${view === 'garage' ? 'active' : ''}`} onClick={() => setView('garage')}>GARAGE</button>
           <button className={`nav-btn ${view === 'race' ? 'active' : ''}`} onClick={() => setView('race')}>RACE</button>
           <button className={`nav-btn ${view === 'shop' ? 'active' : ''}`} onClick={() => setView('shop')}>SHOP</button>
+          <button className={`nav-btn ${view === 'leaderboard' ? 'active' : ''}`} onClick={() => setView('leaderboard')}>BOARD</button>
         </nav>
       </header>
 
@@ -52,6 +59,7 @@ export function App() {
         {view === 'garage' && <Garage />}
         {view === 'race' && <Race />}
         {view === 'shop' && <Shop />}
+        {view === 'leaderboard' && <Leaderboard />}
       </main>
     </div>
   )

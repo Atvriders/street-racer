@@ -39,7 +39,7 @@ function getGearSpeedMultiplier(gear: number): number {
 }
 
 export function Race() {
-  const { cars, selectedCarUid, cash, rep, addCash, addRep } = useGameStore()
+  const { cars, selectedCarUid, cash, rep, addCash, addRep, recordWin } = useGameStore()
   const selectedCar = cars.find(c => c.uid === selectedCarUid)
   const currentTier = getUnlockedTier(rep)
 
@@ -193,6 +193,7 @@ export function Race() {
           if (wager > 0) cashEarned += wager * 2
           addCash(cashEarned)
           addRep(repEarned)
+          recordWin(cashEarned)
         } else {
           result = 'lose'
           cashEarned = Math.floor(tierDef.baseCashReward * 0.2)
@@ -223,7 +224,7 @@ export function Race() {
 
     rafRef.current = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [state.phase, selectedCar, addCash, addRep, wager])
+  }, [state.phase, selectedCar, addCash, addRep, recordWin, wager])
 
   const handleThrottleClick = useCallback(() => {
     if (stateRef.current.phase !== 'racing') return

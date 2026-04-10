@@ -1,14 +1,39 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { GameState, OwnedCar, PartSlot, CosmeticSlot, CarId, View, CarStats } from './types'
-import { CARS, PARTS, COSMETICS, GARAGE_SLOT_COSTS, CREW, getPartCost, getCosmeticCost } from './data'
+import type { GameState, OwnedCar, PartSlot, CosmeticSlot, CarId, View, CarStats, LeaderboardEntry } from './types'
+import { CARS, PARTS, COSMETICS, GARAGE_SLOT_COSTS, CREW, getPartCost, getCosmeticCost, getUnlockedTier } from './data'
+
+const LEADERBOARD_KEY = 'street_racer_leaderboard'
+
+function readLeaderboard(): LeaderboardEntry[] {
+  try {
+    const raw = localStorage.getItem(LEADERBOARD_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+function writeLeaderboard(entries: LeaderboardEntry[]): void {
+  try {
+    localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(entries))
+  } catch {
+    // ignore storage errors
+  }
+}
 
 function makeDefaultParts(): Record<PartSlot, number> {
-  return { engine: 0, turbo: 0, exhaust: 0, suspension: 0, tires: 0, nos: 0, weight: 0, transmission: 0 }
+  return {
+    engine: 0, turbo: 0, exhaust: 0, suspension: 0, tires: 0, nos: 0, weight: 0, transmission: 0,
+    intercooler: 0, ecu: 0, clutch: 0, rollcage: 0, brakes: 0, intake: 0, headers: 0, flywheel: 0, fuel: 0, diff: 0,
+  }
 }
 
 function makeDefaultCosmetics(): Record<CosmeticSlot, number> {
-  return { paint: 0, wheels: 0, bodykit: 0, spoiler: 0, underglow: 0, tint: 0 }
+  return {
+    paint: 0, wheels: 0, bodykit: 0, spoiler: 0, underglow: 0, tint: 0,
+    hood: 0, exhaust_tip: 0, decals: 0, mirrors: 0, seats: 0, roll_bar: 0,
+  }
 }
 
 function generateId(): string {
@@ -60,6 +85,8 @@ interface GameActions {
   buyCrewMember: (crewId: string) => void
   tickIdleIncome: (deltaSeconds: number) => void
   resetGame: () => void
+  setUsername: (name: string) => void
+  recordWin: (cashEarned: number) => void
 }
 
 const INITIAL_CAR = createOwnedCar('civic_eg')
@@ -72,6 +99,9 @@ const INITIAL_STATE: GameState = {
   selectedCarUid: INITIAL_CAR.uid,
   crewMembers: [],
   view: 'garage',
+  username: '',
+  totalRacesWon: 0,
+  totalCashEarned: 0,
 }
 
 export const useGameStore = create<GameState & GameActions>()(
@@ -163,6 +193,35 @@ export const useGameStore = create<GameState & GameActions>()(
       resetGame: () => set(() => {
         const car = createOwnedCar('civic_eg')
         return { ...INITIAL_STATE, cars: [car], selectedCarUid: car.uid }
+      }),
+
+      setUsername: (name) => set({ username: name }),
+
+      recordWin: (cashEarned) => set((state) => {
+        const newTotalRacesWon = state.totalRacesWon + 1
+        const newTotalCashEarned = state.totalCashEarned + cashEarned
+        const topTier = getUnlockedTier(state.rep)
+
+        if (state.username) {
+          const entries = readLeaderboard()
+          const idx = entries.findIndex(e => e.username === state.username)
+          const entry: LeaderboardEntry = {
+            username: state.username,
+            rep: state.rep,
+            totalCashEarned: newTotalCashEarned,
+            totalRacesWon: newTotalRacesWon,
+            topTier,
+            lastUpdated: Date.now(),
+          }
+          if (idx >= 0) {
+            entries[idx] = entry
+          } else {
+            entries.push(entry)
+          }
+          writeLeaderboard(entries)
+        }
+
+        return { totalRacesWon: newTotalRacesWon, totalCashEarned: newTotalCashEarned }
       }),
     }),
     { name: 'street_racer_save' }
