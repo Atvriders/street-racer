@@ -2,5 +2,5 @@ services:
   street-racer:
     image: ghcr.io/atvriders/street-racer:latest
     ports:
-      - "8080:80"
+      - "8085:80"
     restart: unless-stopped

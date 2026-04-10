@@ -38,10 +38,10 @@ docker compose up -d
 
 ```bash
 docker pull ghcr.io/atvriders/street-racer:latest
-docker run -p 8080:80 ghcr.io/atvriders/street-racer:latest
+docker run -p 8085:80 ghcr.io/atvriders/street-racer:latest
 ```
 
-Open [http://localhost:8080](http://localhost:8080).
+Open [http://localhost:8085](http://localhost:8085).
 
 ## Tech Stack
 
