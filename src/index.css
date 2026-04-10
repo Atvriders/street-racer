@@ -182,3 +182,147 @@ button:active {
   margin-top: -20px;
   transition: color 0.15s;
 }
+
+/* Garage */
+.garage {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+}
+
+.garage-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.garage-card {
+  background: var(--bg-card);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.garage-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--cyan-dim);
+}
+
+.garage-card.selected {
+  border-color: var(--cyan);
+  box-shadow: var(--cyan-glow);
+  background: var(--bg-card-hover);
+}
+
+.garage-card-name {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+}
+
+.garage-card-year {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.garage-detail {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  animation: slide-up 0.3s ease;
+}
+
+.garage-detail-car {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.garage-detail-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--cyan);
+  text-shadow: var(--cyan-glow);
+  letter-spacing: 2px;
+}
+
+.garage-stats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+.stat-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  width: 60px;
+  letter-spacing: 1px;
+}
+
+.stat-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-primary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  width: 50px;
+  text-align: right;
+}
+
+.idle-income {
+  position: fixed;
+  bottom: 16px;
+  right: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--green);
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 0 12px #00ff8833;
+}
+
+.idle-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.idle-value {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--green);
+}
