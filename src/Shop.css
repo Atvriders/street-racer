@@ -286,3 +286,57 @@
 .hire-btn.cant-afford {
   opacity: 0.4;
 }
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .shop {
+    padding: 12px;
+    gap: 20px;
+    padding-bottom: 40px;
+  }
+
+  /* Upgrade grid — single column */
+  .upgrade-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Smaller upgrade cards */
+  .upgrade-card {
+    padding: 8px 10px;
+  }
+
+  .upgrade-name {
+    font-size: 0.8rem;
+  }
+
+  .upgrade-btn {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+
+  /* Car shop and crew grids — tighter min size */
+  .car-shop-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+
+  .car-shop-card {
+    padding: 10px;
+  }
+
+  .crew-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+
+  .crew-card {
+    padding: 10px;
+  }
+
+  /* Buy slot button */
+  .buy-slot-btn {
+    font-size: 0.75rem;
+    padding: 8px 16px;
+  }
+}

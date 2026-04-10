@@ -326,3 +326,85 @@ button:active {
   font-size: 0.9rem;
   color: var(--green);
 }
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Prevent double-tap zoom on interactive elements */
+  button,
+  .race-strip,
+  .garage-card,
+  .race-tier-card,
+  .upgrade-card,
+  .car-shop-card,
+  .crew-card {
+    touch-action: manipulation;
+  }
+
+  /* HUD — stack title / stats / nav vertically */
+  .hud {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .hud-title {
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .hud-stats {
+    justify-content: center;
+    gap: 12px;
+    font-size: 0.8rem;
+  }
+
+  .hud-nav {
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .nav-btn {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    letter-spacing: 1px;
+  }
+
+  /* Garage — stack silhouette above stats */
+  .garage {
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .garage-detail {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .garage-stats {
+    max-width: 100%;
+  }
+
+  /* Smaller garage grid cards */
+  .garage-grid {
+    gap: 10px;
+  }
+
+  .garage-card {
+    padding: 10px;
+  }
+
+  .garage-card-name {
+    font-size: 0.7rem;
+  }
+
+  /* Idle income — keep it but reduce size */
+  .idle-income {
+    bottom: 8px;
+    right: 8px;
+    padding: 6px 10px;
+    gap: 8px;
+  }
+}

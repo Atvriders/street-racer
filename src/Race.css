@@ -358,3 +358,100 @@
   color: var(--bg-primary);
   box-shadow: var(--cyan-glow);
 }
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Race select screen */
+  .race-select {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .race-title {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
+
+  /* Single column tier grid */
+  .race-tier-grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+    gap: 10px;
+  }
+
+  .race-tier-card {
+    padding: 14px;
+  }
+
+  /* Wager input */
+  .wager-section {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .wager-input {
+    width: 110px;
+  }
+
+  /* Race HUD — shrink tachometer, buttons side by side */
+  .race-hud {
+    bottom: 10px;
+    left: 10px;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  /* Scale down tachometer to 60% on mobile */
+  .race-hud .tachometer {
+    transform: scale(0.6);
+    transform-origin: bottom left;
+  }
+
+  /* Shift + NOS buttons — horizontal row instead of column */
+  .race-buttons {
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .shift-btn {
+    font-size: 0.85rem;
+    padding: 10px 16px;
+    letter-spacing: 1px;
+  }
+
+  .nos-btn {
+    font-size: 0.8rem;
+    padding: 8px 14px;
+    letter-spacing: 1px;
+  }
+
+  /* Speed readout — smaller */
+  .race-speed {
+    font-size: 1.3rem;
+    bottom: 14px;
+    right: 12px;
+  }
+
+  /* Result screen */
+  .result-banner {
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+  }
+
+  .result-rewards {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+  }
+
+  /* Countdown */
+  .countdown-number {
+    font-size: 4rem;
+  }
+
+  /* Ensure race strip is fully tappable */
+  .race-strip {
+    touch-action: none;
+  }
+}
